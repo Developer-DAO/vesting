@@ -1,15 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/security/PullPayment.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract MockERC721 is ERC721, PullPayment, Ownable {
-    using SafeERC20 for IERC20;
+contract MockERC721 is ERC721 {
     using Address for address;
 
     using Counters for Counters.Counter;
@@ -42,18 +37,5 @@ contract MockERC721 is ERC721, PullPayment, Ownable {
     /// @dev Sets the base token URI prefix.
     function setBaseTokenURI(string memory _baseTokenURI) public {
         baseTokenURI = _baseTokenURI;
-    }
-
-    function pika(
-        address _asset,
-        uint256 _amount,
-        address _to
-    ) public onlyOwner {
-        IERC20(_asset).safeTransfer(_to, _amount);
-    }
-
-    /// @dev Overridden in order to make it an onlyOwner function
-    function withdrawPayments(address payable payee) public virtual override onlyOwner {
-        super.withdrawPayments(payee);
     }
 }

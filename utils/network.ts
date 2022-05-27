@@ -23,8 +23,6 @@ export function node_url(networkName: string): string {
   if (uri.indexOf('{{') >= 0) {
     throw new Error(`invalid uri or network not supported by node provider : ${uri}`);
   }
-
-  console.log('node url:', uri);
   return uri;
 }
 
